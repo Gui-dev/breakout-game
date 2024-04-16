@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://6nqhoeyt43qi"]
+
+[ext_resource type="Texture2D" uid="uid://cmh6u8akc6s4i" path="res://assets/sprites/campo-roxo.png" id="1_udvl0"]
+[ext_resource type="PackedScene" uid="uid://cckff24ykshux" path="res://src/player/player.tscn" id="2_prfhf"]
+
+[node name="level_01" type="Node2D"]
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(400, 300)
+texture = ExtResource("1_udvl0")
+
+[node name="player" parent="." instance=ExtResource("2_prfhf")]
+position = Vector2(385, 533)
