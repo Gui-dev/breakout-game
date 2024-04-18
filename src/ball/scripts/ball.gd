@@ -1,4 +1,5 @@
 extends Area2D
+class_name Ball
 
 
 var initial_position: Vector2 = Vector2(400, 450)
@@ -20,6 +21,7 @@ func _process(delta):
       select_initial_position()
       first_throw = false
   ball_movement(delta)
+  verify_ball_position()
 
 
 func reset_ball() -> void:
@@ -34,3 +36,17 @@ func select_initial_position() -> void:
 
 func ball_movement(delta: float) -> void:
   position += new_direction * ball_speed * delta
+
+
+func verify_ball_position() -> void:
+  if position.y <= 590:
+    if position.y < 1:
+      new_direction.y *= -1
+    if position.x < 1 or position.x > 790:
+      new_direction.x *= -1
+
+
+func _on_body_entered(body: StaticBody2D) -> void:
+  if body.is_in_group("player"):
+    new_direction.y *= -1
+  
