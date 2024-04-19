@@ -3,11 +3,18 @@ class_name Ball
 
 
 var initial_position: Vector2 = Vector2(400, 450)
-var initial_direction: Vector2 = Vector2(0, 0)
-var new_direction: Vector2 = Vector2(0, 0)
+var initial_direction: Vector2 = Vector2.ZERO
+var new_direction: Vector2 = Vector2.ZERO
 var first_throw: bool = true
+var ball_fell: bool = false
+var screen_minimum_size_x: float = 1
+var screen_maximum_size_x: float = 790
+var screen_minimum_size_y: float = 1
+var screen_maximum_size_y: float = 590
 @export_category("variables")
 @export var ball_speed: float = 400.0
+@export_category("objects")
+@export var ball_timer: Timer = null
 
 
 func _ready() -> void:
@@ -39,14 +46,30 @@ func ball_movement(delta: float) -> void:
 
 
 func verify_ball_position() -> void:
-  if position.y <= 590:
-    if position.y < 1:
+  if position.y <= screen_maximum_size_y:
+    if position.y < screen_minimum_size_y:
       new_direction.y *= -1
-    if position.x < 1 or position.x > 790:
+    if position.x < screen_minimum_size_x or position.x > screen_maximum_size_x:
       new_direction.x *= -1
+  if position.y > screen_maximum_size_y and not ball_fell:
+    ball_timer.start()
+    ball_fell = true
+    
+
+func ball_left_screen() -> void:
+  new_direction = Vector2.ZERO
+  first_throw = true
+  reset_ball()
 
 
 func _on_body_entered(body: StaticBody2D) -> void:
   if body.is_in_group("player"):
     new_direction.y *= -1
+  if body.is_in_group("block"):
+    body.hit_damage()
+    new_direction.y *= -1
   
+
+func _on_timer_timeout():
+  ball_left_screen()
+  ball_fell = false

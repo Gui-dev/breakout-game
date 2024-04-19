@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bupv4uvvl2hkl"]
+
+[ext_resource type="Script" path="res://src/blocks/scripts/block.gd" id="1_iy8g0"]
+[ext_resource type="Texture2D" uid="uid://bl8hxeuvidrg3" path="res://assets/sprites/bloco.png" id="1_na3j3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3gs1t"]
+size = Vector2(70, 20)
+
+[node name="block" type="StaticBody2D" groups=["block"]]
+script = ExtResource("1_iy8g0")
+_block_color_red = Color(1, 0, 0, 1)
+_block_color_green = Color(0, 1, 0, 1)
+_block_color_blue = Color(0.239216, 0.462745, 1, 1)
+
+[node name="sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_na3j3")
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3gs1t")
