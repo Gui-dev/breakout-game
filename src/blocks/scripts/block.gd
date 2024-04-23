@@ -8,6 +8,7 @@ class_name Block
 @export var _block_color_red: Color
 @export var _block_color_green: Color
 @export var _block_color_blue: Color
+@export var game_manager: GameManager
 
 
 func _ready():
@@ -19,6 +20,7 @@ func hit_damage() -> void:
   if _block_health >= 1:
     _update_color()
   if _block_health <= 0:
+    game_manager.update_quantity_block()
     queue_free()
 
 

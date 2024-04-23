@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://6nqhoeyt43qi"]
+[gd_scene load_steps=6 format=3 uid="uid://6nqhoeyt43qi"]
 
 [ext_resource type="Texture2D" uid="uid://cmh6u8akc6s4i" path="res://assets/sprites/campo-roxo.png" id="1_udvl0"]
 [ext_resource type="PackedScene" uid="uid://bupv4uvvl2hkl" path="res://src/blocks/block.tscn" id="2_8pir8"]
 [ext_resource type="PackedScene" uid="uid://cckff24ykshux" path="res://src/player/player.tscn" id="2_prfhf"]
 [ext_resource type="PackedScene" uid="uid://dvl6qscrvxciv" path="res://src/ball/ball.tscn" id="3_fdbp0"]
+[ext_resource type="PackedScene" uid="uid://bhbqnuobjciy1" path="res://src/manager/game_manager.tscn" id="5_o7h1l"]
 
 [node name="level_01" type="Node2D"]
 
@@ -13,19 +14,26 @@ texture = ExtResource("1_udvl0")
 
 [node name="blocks" type="Node2D" parent="."]
 
-[node name="block" parent="blocks" instance=ExtResource("2_8pir8")]
+[node name="block" parent="blocks" node_paths=PackedStringArray("game_manager") instance=ExtResource("2_8pir8")]
 position = Vector2(416, 64)
+game_manager = NodePath("../../game_manager")
 
-[node name="block2" parent="blocks" instance=ExtResource("2_8pir8")]
+[node name="block2" parent="blocks" node_paths=PackedStringArray("game_manager") instance=ExtResource("2_8pir8")]
 position = Vector2(296, 64)
 _block_health = 2
+game_manager = NodePath("../../game_manager")
 
-[node name="block3" parent="blocks" instance=ExtResource("2_8pir8")]
+[node name="block3" parent="blocks" node_paths=PackedStringArray("game_manager") instance=ExtResource("2_8pir8")]
 position = Vector2(536, 64)
 _block_health = 3
+game_manager = NodePath("../../game_manager")
 
 [node name="player" parent="." instance=ExtResource("2_prfhf")]
 position = Vector2(400, 500)
 
 [node name="ball" parent="." instance=ExtResource("3_fdbp0")]
 position = Vector2(400, 450)
+
+[node name="game_manager" parent="." node_paths=PackedStringArray("blocks") instance=ExtResource("5_o7h1l")]
+blocks = NodePath("../blocks")
+new_scene = "res://src/levels/level_02.tscn"
