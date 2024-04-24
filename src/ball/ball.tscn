@@ -1,15 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvl6qscrvxciv"]
+[gd_scene load_steps=7 format=3 uid="uid://dvl6qscrvxciv"]
 
 [ext_resource type="Script" path="res://src/ball/scripts/ball.gd" id="1_dtc2c"]
 [ext_resource type="Texture2D" uid="uid://crf3o77qa6jbp" path="res://assets/sprites/bola.png" id="1_sw7xq"]
+[ext_resource type="AudioStream" uid="uid://coekrlycr2wlv" path="res://assets/effects/impacto-bloco.wav" id="3_o670l"]
+[ext_resource type="AudioStream" uid="uid://1n38qf8u83fb" path="res://assets/effects/impacto-paddle.wav" id="4_6kwg7"]
+[ext_resource type="AudioStream" uid="uid://bqonrdigtca7l" path="res://assets/effects/impacto-tela.wav" id="5_smkvo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_et4pn"]
 
-[node name="ball" type="Area2D" node_paths=PackedStringArray("ball_timer")]
+[node name="ball" type="Area2D" node_paths=PackedStringArray("ball_timer", "block_audio", "player_audio", "screen_audio")]
 collision_layer = 8
 collision_mask = 7
 script = ExtResource("1_dtc2c")
 ball_timer = NodePath("timer")
+block_audio = NodePath("block_audio")
+player_audio = NodePath("player_audio")
+screen_audio = NodePath("screen_audio")
 
 [node name="sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_sw7xq")
@@ -19,6 +25,15 @@ shape = SubResource("RectangleShape2D_et4pn")
 
 [node name="timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="block_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_o670l")
+
+[node name="player_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_6kwg7")
+
+[node name="screen_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_smkvo")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

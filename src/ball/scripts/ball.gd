@@ -7,14 +7,17 @@ var initial_direction: Vector2 = Vector2.ZERO
 var new_direction: Vector2 = Vector2.ZERO
 var first_throw: bool = true
 var ball_fell: bool = false
-var screen_minimum_size_x: float = 1
-var screen_maximum_size_x: float = 790
+var screen_minimum_size_x: float = 1.0
+var screen_maximum_size_x: float = 780.0
 var screen_minimum_size_y: float = 1
-var screen_maximum_size_y: float = 590
+var screen_maximum_size_y: float = 580.0
 @export_category("variables")
 @export var ball_speed: float = 400.0
 @export_category("objects")
 @export var ball_timer: Timer = null
+@export var block_audio: AudioStreamPlayer
+@export var player_audio: AudioStreamPlayer
+@export var screen_audio: AudioStreamPlayer
 
 
 func _ready() -> void:
@@ -46,10 +49,12 @@ func ball_movement(delta: float) -> void:
 
 
 func verify_ball_position() -> void:
-  if position.y <= screen_maximum_size_y:
+  if position.y < screen_maximum_size_y:
     if position.y < screen_minimum_size_y:
+      screen_audio.play()
       new_direction.y *= -1
     if position.x < screen_minimum_size_x or position.x > screen_maximum_size_x:
+      screen_audio.play()
       new_direction.x *= -1
   if position.y > screen_maximum_size_y and not ball_fell:
     ball_timer.start()
@@ -64,8 +69,10 @@ func ball_left_screen() -> void:
 
 func _on_body_entered(body: StaticBody2D) -> void:
   if body.is_in_group("player"):
+    player_audio.play()
     new_direction.y *= -1
   if body.is_in_group("block"):
+    block_audio.play()
     body.hit_damage()
     new_direction.y *= -1
   
