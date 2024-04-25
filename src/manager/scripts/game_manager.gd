@@ -13,6 +13,17 @@ func _ready() -> void:
   search_blocks()
   
 
+func _process(_delta: float) -> void:
+  get_inputs()
+  
+
+func get_inputs() -> void:
+  if Input.is_action_just_pressed("restart"):
+    get_tree().reload_current_scene()
+  if Input.is_action_just_pressed("exit"):
+    get_tree().quit()
+  
+
 func search_blocks() -> void:
   for block in blocks.get_children():
     quantity_block += 1
